@@ -259,11 +259,16 @@ app.get('/api/vodu/list', async (req, res) => {
     }
 });
 
-app.listen(PORT, () => {
-    console.log(`
+const PORT = process.env.PORT || 3000;
+if (process.env.NODE_ENV !== 'production') {
+    app.listen(PORT, () => {
+        console.log(`
     =====================================================
     🚀 سيرفر "KYN" المطور يعمل الآن!
     🌐 افتح هذا الرابط: http://localhost:${PORT}
     =====================================================
     `);
-});
+    });
+} else {
+    module.exports = app;
+}
