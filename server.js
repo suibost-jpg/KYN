@@ -2,11 +2,15 @@ const express = require('express');
 const path = require('path');
 const cors = require('cors');
 const fs = require('fs');
+const axios = require('axios');
+const cheerio = require('cheerio');
 const { MOVIES } = require('@consumet/extensions');
 
 const app = express();
 const PORT = 3000;
-const DB_FILE = path.join(__dirname, 'users.json');
+// For Vercel, use /tmp/ which is writable
+const isVercel = process.env.VERCEL || process.env.NODE_ENV === 'production';
+const DB_FILE = isVercel ? '/tmp/users.json' : path.join(__dirname, 'users.json');
 
 app.use(cors());
 app.use(express.json()); // To parse JSON bodies
@@ -25,7 +29,11 @@ function readDB() {
 
 // Helper: Write DB
 function writeDB(data) {
-    fs.writeFileSync(DB_FILE, JSON.stringify(data, null, 2), 'utf-8');
+    try {
+        fs.writeFileSync(DB_FILE, JSON.stringify(data, null, 2), 'utf-8');
+    } catch(e) {
+        console.error("Error writing to DB:", e);
+    }
 }
 
 // HTML serving
@@ -97,9 +105,7 @@ app.get('/api/watch', async (req, res) => {
     }
 });
 
-const axios = require('axios');
-const cheerio = require('cheerio');
-
+// Requires moved to top
 app.get('/api/vodu/home', async (req, res) => {
     try {
         const response = await axios.get('https://movie.vodu.me', {
@@ -260,7 +266,7 @@ app.get('/api/vodu/list', async (req, res) => {
 });
 
 const PORT = process.env.PORT || 3000;
-if (process.env.NODE_ENV !== 'production') {
+if (require.main === module) {
     app.listen(PORT, () => {
         console.log(`
     =====================================================
@@ -269,6 +275,5 @@ if (process.env.NODE_ENV !== 'production') {
     =====================================================
     `);
     });
-} else {
-    module.exports = app;
 }
+module.exports = app;
