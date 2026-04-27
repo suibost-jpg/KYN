@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KYN</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Aref+Ruqaa:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-left">
+            <h1 class="logo">KYN</h1>
+            <ul class="nav-links">
+                <li><a href="#" class="active">الرئيسية</a></li>
+                <li><a href="#">أفلام</a></li>
+                <li><a href="#">مسلسلات</a></li>
+                <li><a href="#">أنمي</a></li>
+                <li><a href="#">كيدراما</a></li>
+                <li><a href="#">قائمتي</a></li>
+            </ul>
+        </div>
+        <div class="nav-right">
+            <div class="search-box">
+                <i class="fas fa-search icon" id="search-btn"></i>
+                <input type="text" id="search-input" placeholder="بحث...">
+            </div>
+            <i class="fas fa-bell icon"></i>
+            <div class="profile-avatar" id="login-btn" style="cursor:pointer;"><i class="fas fa-user"></i></div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero" id="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title" id="hero-title">John Wick 4</h1>
+            <p class="hero-description" id="hero-desc">
+                جون ويك يكتشف طريقة لهزيمة المجلس الأعلى، لكن قبل أن يتمكن من كسب حريته، يجب أن يواجه عدوًا جديدًا...
+            </p>
+            <div class="hero-buttons">
+                <button class="btn btn-play"><i class="fas fa-play"></i> تشغيل</button>
+                <button class="btn btn-info"><i class="fas fa-info-circle"></i> المزيد من المعلومات</button>
+            </div>
+        </div>
+        <div class="hero-vignette"></div>
+    </header>
+
+    <!-- Main Content (Movie Rows) -->
+    <main class="main-content" id="movie-rows-container">
+        <!-- Rows will be injected by JavaScript -->
+    </main>
+
+    <!-- Movie Modal (Hidden by default) -->
+    <div class="modal-overlay" id="movie-modal">
+        <div class="modal-content">
+            <button class="close-modal" id="close-modal"><i class="fas fa-times"></i></button>
+            <div class="modal-video-container">
+                <!-- We can embed an iframe or video tag here -->
+                <div class="video-placeholder">
+                    <i class="fas fa-play-circle play-icon-large"></i>
+                    <p>سيتم تشغيل الفيلم هنا...</p>
+                </div>
+            </div>
+
+            <!-- Server Selector Removed to keep it simple -->
+
+            <div class="modal-info">
+                <h2 id="modal-title">Movie Title</h2>
+                <div class="modal-meta">
+                    <span class="match">مُطابق بنسبة 98%</span>
+                    <span class="year">2023</span>
+                    <span class="age">+18</span>
+                    <span class="quality">4K</span>
+                </div>
+                <p id="modal-desc">Movie description goes here...</p>
+                <div style="margin-top: 20px;">
+                    <button class="btn btn-info" id="add-to-list-btn"><i class="fas fa-plus"></i> إضافة للقائمة</button>
+                </div>
+
+                <!-- TV Show Seasons & Episodes Container -->
+                <div id="tv-seasons-container"
+                    style="display: none; margin-top: 25px; border-top: 1px solid #333; padding-top: 20px;">
+                    <h3 style="margin-bottom: 15px; font-size: 1.2rem;">المواسم والحلقات</h3>
+                    <select id="season-selector" class="season-selector">
+                        <!-- Options injected by JS -->
+                    </select>
+                    <div id="episodes-list" class="episodes-list">
+                        <!-- Episodes injected by JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="login-modal-overlay" id="login-modal-overlay">
+        <div class="login-modal">
+            <button class="close-login-btn" id="close-login-btn"><i class="fas fa-times"></i></button>
+            <h2 class="login-title">تسجيل الدخول</h2>
+            <p class="login-subtitle">مرحباً بك في منصة KYN للأفلام</p>
+
+            <!-- Login Form -->
+            <form id="login-form">
+                <div class="input-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="login-email" placeholder="البريد الإلكتروني" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="login-password" placeholder="كلمة المرور" required>
+                </div>
+                <div class="login-options">
+                    <label><input type="checkbox" checked> تذكرني</label>
+                    <a href="#" class="forgot-password">نسيت كلمة المرور؟</a>
+                </div>
+                <button type="submit" class="login-submit-btn">دخول</button>
+                <div class="login-footer">
+                    <p>ليس لديك حساب؟ <a href="#" id="show-register">سجل الآن</a></p>
+                </div>
+            </form>
+
+            <!-- Register Form (Hidden by default) -->
+            <form id="register-form" style="display: none;">
+                <div class="input-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="register-name" placeholder="الاسم الكامل" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="register-email" placeholder="البريد الإلكتروني" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="register-password" placeholder="كلمة المرور" required>
+                </div>
+                <button type="submit" class="login-submit-btn" style="background: #46d369;">إنشاء حساب</button>
+                <div class="login-footer">
+                    <p>لديك حساب بالفعل؟ <a href="#" id="show-login">تسجيل الدخول</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <h2 class="footer-logo">KYN</h2>
+            <p>منصة متكاملة لمشاهدة أحدث الأفلام والمسلسلات بجودة عالية.</p>
+            <div class="footer-social">
+                <i class="fab fa-instagram"></i>
+                <i class="fab fa-twitter"></i>
+                <i class="fab fa-facebook"></i>
+                <i class="fab fa-youtube"></i>
+            </div>
+            <p class="footer-copyright">جميع الحقوق محفوظة &copy; 2026 منصة KYN</p>
+        </div>
+    </footer>
+
+    <script src="app.js?v=3.0"></script>
+</body>
+
+</html>
